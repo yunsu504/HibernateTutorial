@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
  
-public class DaoCommon<T> {
+public class DaoCommon1<T> {
      
      
     private SessionFactory factory;
@@ -17,7 +17,7 @@ public class DaoCommon<T> {
      
      
      
-    public DaoCommon(Class<?> clazz) {
+    public DaoCommon1(Class<?> clazz) {
         factory = HibernateUtil.getSessionFactory();
         this.clazz = clazz;
         this.boardName = clazz.getSimpleName();
