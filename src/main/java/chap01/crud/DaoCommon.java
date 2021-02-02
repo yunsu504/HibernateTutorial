@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import util.HibernateUtil;
 
@@ -54,6 +55,21 @@ public class DaoCommon<T> { //여러개의 클래스를 받기위한 제너릭
 		List<T> list = query.list();
 		session.getTransaction().commit();
 		return list;
-		
 	}
+	
+	//Paging
+	private static  int numPerPage = 10;
+    
+    public List<?> getPagingList(int requestPage){
+        Session session = factory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        Query query = (Query) session.createQuery("from "+clazzName+" order by id asc");
+ 
+        query.setFirstResult((requestPage-1)*numPerPage); //numPerPage = 페이지당 게시글 수  
+        query.setMaxResults(numPerPage); 
+         
+        List<?> members = query.list();
+        tx.commit();
+        return members;
+    }
 }
